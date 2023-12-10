@@ -12,6 +12,9 @@ export const Todo = ({ text, count, removeTodo, id }) => {
       <DeleteButton type="button" onClick={() => removeTodo(id)}>
         <RiDeleteBinLine size={24} />
       </DeleteButton>
+      <EditButton type="button">
+        <RiEdit2Line size={24} />
+      </EditButton>
     </TodoWrapper>
   );
 };

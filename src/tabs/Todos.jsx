@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { Grid, GridItem, SearchForm, EditForm, Text, Todo } from 'components';
+import { Grid, GridItem, SearchForm, Todo } from 'components';
+// EditForm;
 
 export class Todos extends Component {
   state = {
