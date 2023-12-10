@@ -15,6 +15,7 @@ export class SearchForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(this.state.search);
+    this.setState({ search: '' });
   };
 
   render() {
@@ -29,6 +30,7 @@ export class SearchForm extends Component {
           required
           autoFocus
           onChange={this.handleChange}
+          value={this.state.search}
         />
       </SearchFormStyled>
     );

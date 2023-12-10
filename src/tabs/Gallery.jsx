@@ -47,18 +47,20 @@ export class Gallery extends Component {
   render() {
     return (
       <>
-        {/* <Text textAlign="center">Sorry. There are no images ... 😭</Text> */}
         <SearchForm onSubmit={this.searchImages} />
-
-        <Grid>
-          {this.state.images.map(({ id, avg_color, alt, src: { large } }) => (
-            <GridItem key={id}>
-              <CardItem color={avg_color}>
-                <img src={large} alt={alt} />
-              </CardItem>
-            </GridItem>
-          ))}
-        </Grid>
+        {!this.state.images.length && this.state.search ? (
+          <Text textAlign="center">Sorry. There are no images ... 😭</Text>
+        ) : (
+          <Grid>
+            {this.state.images.map(({ id, avg_color, alt, src: { large } }) => (
+              <GridItem key={id}>
+                <CardItem color={avg_color}>
+                  <img src={large} alt={alt} />
+                </CardItem>
+              </GridItem>
+            ))}
+          </Grid>
+        )}
         {this.state.buttonShow && (
           <Button type="button" onClick={this.nextPage}>
             Load more
