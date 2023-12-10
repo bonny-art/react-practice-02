@@ -9,14 +9,18 @@ export class Gallery extends Component {
     search: '',
     error: null,
     page: 1,
+    buttonShow: false,
   };
 
   searchImages = search => {
-    this.setState({ search });
+    this.setState({ search, images: [], page: 1, error: null });
   };
 
   componentDidUpdate(_, prevState) {
-    if (prevState.search !== this.state.search) {
+    if (
+      prevState.search !== this.state.search ||
+      prevState.page !== this.state.page
+    ) {
       this.getImages();
     }
   }
@@ -25,10 +29,19 @@ export class Gallery extends Component {
     const { search, page } = this.state;
     try {
       const searchResult = await ImageService.getImages(search, page);
-      this.setState({ images: searchResult.photos });
+      this.setState(prevState => ({
+        images: [...prevState.images, ...searchResult.photos],
+        buttonShow:
+          searchResult.page <
+          Math.ceil(searchResult.total_results / searchResult.per_page),
+      }));
     } catch (error) {
       this.setState({ error });
     }
+  };
+
+  nextPage = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   render() {
@@ -46,6 +59,11 @@ export class Gallery extends Component {
             </GridItem>
           ))}
         </Grid>
+        {this.state.buttonShow && (
+          <Button type="button" onClick={this.nextPage}>
+            Load more
+          </Button>
+        )}
       </>
     );
   }
